@@ -1,32 +1,25 @@
 package main
 
 import (
+	"crypto/sha256"
 	"encrptr/internal/helpers"
-	"hash/fnv"
-	"syscall/js"
+	"fmt"
 )
 
 func main() {
-
-	jsGlobal := js.Global()
-	jsGlobal.Set("wasmEncodeImage", js.FuncOf(wasmEncodeImage))
-	select {}
-}
-func hash32(s string) []byte {
-	h := fnv.New32a()
-	h.Write([]byte(s))
-	return h.Sum(nil)
-}
-
-func wasmEncodeImage(this js.Value, args []js.Value) any {
-	if len(args) != 2 {
-		return js.ValueOf("Invalid arguments")
-	}
-	message := args[0].String()
-	key := args[1].String()
-	encrypted, err := helpers.Encrypt([]byte(message), []byte(key))
+	message := "grow flee opera uncle track book mule six cattle bachelor wait liberty mind second fall churn badge hello erase uncover seven enrich flock favorite"
+	key := "grow flee opera uncle track book mule six cattle bachelor wait liberty mind second fall churn badge hello erase uncover seven enrich flock favorite"
+	encrypted, err := helpers.Encrypt([]byte(message), hash32Bytes(key))
 	if err != nil {
-		return js.ValueOf(err.Error())
+		fmt.Println(err)
 	}
-	return helpers.EncodeImage(encrypted)
+	rawImage, err := helpers.EncodeImage(encrypted)
+	fmt.Println(rawImage)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+func hash32Bytes(s string) []byte {
+	h := sha256.Sum256([]byte(s))
+	return h[:]
 }

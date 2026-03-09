@@ -1,19 +1,18 @@
 package helpers
 
 import (
+	"bytes"
 	"image"
 	"image/color"
 	"image/png"
 	"math"
-	"os"
 )
 
-func EncodeImage(rawData []byte) error {
+func EncodeImage(rawData []byte) (rawImage []byte, err error) {
 	// padding
 	for len(rawData)%3 != 0 {
 		rawData = append(rawData, 0)
 	}
-
 	pixels := len(rawData) / 3
 	side := int(math.Ceil(math.Sqrt(float64(pixels))))
 	img := image.NewRGBA(image.Rect(0, 0, side, side))
@@ -27,11 +26,15 @@ func EncodeImage(rawData []byte) error {
 			A: 255,
 		})
 	}
-	f, err := os.Create("tmp.png")
-	if err != nil {
-		return err
+	// f, err := os.Create("tmp.png")
+	// if err != nil {
+	// 	return err
+	// }
+	// defer f.Close()
+	buf := bytes.NewBuffer(nil)
+	if err = png.Encode(buf, img); err != nil {
+		return nil, err
 	}
-	defer f.Close()
-
-	return png.Encode(f, img)
+	rawImage = buf.Bytes()
+	return
 }

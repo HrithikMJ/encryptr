@@ -3,7 +3,8 @@
   "packages": [
     "go@latest",
     "code-cursor@latest",
-    "nodejs@latest"
+    "nodejs@latest",
+    "gnumake@latest"
   ],
   "shell": {
     "init_hook": [

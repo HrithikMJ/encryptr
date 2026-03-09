@@ -172,7 +172,9 @@ body {
 }
 
 @keyframes spin {
-	to { transform: rotate(360deg); }
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 /* Output */
@@ -198,4 +200,22 @@ body {
 	border-radius: 0.5rem;
 	min-height: 3.75rem;
 	word-break: break-all;
+}
+
+.output-preview {
+	width: 100%;
+	padding: 1rem;
+	background-color: #18181b;
+	border: 1px solid #27272a;
+	border-radius: 0.5rem;
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: center;
+}
+
+.output-preview img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 0.25rem;
+	image-rendering: pixelated;
 }
