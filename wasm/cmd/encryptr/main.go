@@ -24,7 +24,7 @@ func wasmEncodeImage(this js.Value, args []js.Value) any {
 	}
 	message := args[0].String()
 	key := args[1].String()
-	encrypted, err := helpers.Encrypt([]byte(message), hash32(key))
+	encrypted, err := helpers.Encrypt([]byte(message), []byte(key))
 	if err != nil {
 		return js.ValueOf(err.Error())
 	}
