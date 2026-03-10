@@ -8,6 +8,11 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	class Go {
+		importObject: WebAssembly.Imports;
+		run(instance: WebAssembly.Instance): Promise<void>;
+	}
 }
 
 export {};

@@ -7,7 +7,7 @@ export async function getWasm() {
     if (!browser) return null;
     
     if (!wasmPromise) {
-        wasmPromise = await initWasm();
+        wasmPromise = initWasm();
     }
     
     return wasmPromise;
