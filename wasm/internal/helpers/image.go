@@ -24,7 +24,7 @@ func EncodeImage(rawData []byte) (rawImage []byte, err error) {
 	side := int(math.Ceil(math.Sqrt(float64(pixels))))
 
 	img := image.NewRGBA(image.Rect(0, 0, side, side))
-	for i := range rawData {
+	for i := range pixels {
 		x := i % side
 		y := i / side
 		img.Set(x, y, color.RGBA{
