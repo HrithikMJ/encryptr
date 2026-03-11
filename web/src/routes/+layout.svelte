@@ -3,9 +3,15 @@
 	import { getWasm } from '$lib/wasm.js';
 	import { browser } from '$app/environment';
 	import { setContext } from 'svelte';
-
+	
+	setContext('wasm', {
+		get loaded() { return wasmLoaded; },
+		get loading() { return wasmLoading; },
+		get error() { return wasmError; },
+		set error(error: string) { wasmError = error; }
+	});
 	let { children } = $props();
-
+	
 	let wasmLoaded = $state(false);
 	let wasmLoading = $state(false);
 	let wasmError = $state('');
@@ -25,11 +31,6 @@
 			});
 	}
 
-	setContext('wasm', {
-		get loaded() { return wasmLoaded; },
-		get loading() { return wasmLoading; },
-		get error() { return wasmError; }
-	});
 </script>
 
 <!-- WASM status badge (shown on all pages) -->
